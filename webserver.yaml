@@ -1,0 +1,34 @@
+---
+- name: Create and configure a new webserver
+  hosts: all
+  tasks:
+    - name: Install httpd yum package
+      yum:
+        name:
+          - httpd
+          - firewalld
+        state: latest
+    
+    - name: Add a content file to the webserver
+      copy: 
+        content: "This webserver has been installed using Ansible Automation Platform"
+        dest: /var/www/html/index.html
+      
+    - name: Enable the firewall service
+      service:
+        name: firewalld
+        state: started
+        enabled: true
+    
+    - name: Open HTTP service on the firewall
+      firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: yes
+
+    - name: httpd has started
+      systemd:
+        name: httpd
+        state: started
+        enabled: true
