@@ -2,7 +2,7 @@
 - name: Create and configure a new webserver
   hosts: all
   tasks:
-    - name: Install or update pip
-      easy_install:
-        name: pip
-        state: latest
+    - name: Compress directory /path/to/foo/ into /path/to/foo.tgz
+      community.general.archive:
+        path: /home/ec2-user/hello.txt
+        dest: /home/ec2-user/hello.tgz
